@@ -87,7 +87,7 @@ export const useAttendanceStore = create<AttendanceState>((set, get) => ({
     // Calculate streak
     let streak = 0;
     if (allRecords && allRecords.length > 0) {
-      const dates = [...new Set(
+      const dates: string[] = [...new Set(
         allRecords.map((r: { created_at: string }) => new Date(r.created_at).toDateString())
       )];
       const checkDate = new Date();
