@@ -5,6 +5,7 @@
 'use client';
 
 import { useEffect } from 'react';
+import { AuthChangeEvent } from '@supabase/supabase-js';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { createClient } from '@/lib/supabase/client';
 
@@ -18,7 +19,7 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     // Listen for auth state changes
     const supabase = createClient();
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event) => {
+      (event: AuthChangeEvent) => {
         if (event === 'SIGNED_OUT') {
           setUser(null);
         } else if (event === 'SIGNED_IN') {
