@@ -9,7 +9,7 @@ import ToastProvider from '@/components/providers/ToastProvider';
 
 export const metadata: Metadata = {
   title: 'AttendX — Smart Attendance',
-  description: 'Smart attendance tracking with face recognition & location check-in',
+  description: 'Smart attendance tracking with face recognition & geolocation check-in',
   manifest: '/manifest.json',
   appleWebApp: {
     capable: true,
