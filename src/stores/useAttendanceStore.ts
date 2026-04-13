@@ -88,7 +88,7 @@ export const useAttendanceStore = create<AttendanceState>((set, get) => ({
     let streak = 0;
     if (allRecords && allRecords.length > 0) {
       const dates = [...new Set(
-        allRecords.map((r) => new Date(r.created_at).toDateString())
+        allRecords.map((r: { created_at: string }) => new Date(r.created_at).toDateString())
       )];
       const checkDate = new Date();
       for (const dateStr of dates) {
@@ -103,7 +103,7 @@ export const useAttendanceStore = create<AttendanceState>((set, get) => ({
 
     // Unique days this month
     const uniqueDays = new Set(
-      monthRecords?.map((r) => new Date(r.created_at).toDateString())
+      monthRecords?.map((r: { created_at: string }) => new Date(r.created_at).toDateString())
     );
 
     // Determine today's status
@@ -117,7 +117,7 @@ export const useAttendanceStore = create<AttendanceState>((set, get) => ({
       stats: {
         todayStatus,
         totalDays: allRecords?.length
-          ? new Set(allRecords.map((r) => new Date(r.created_at).toDateString())).size
+          ? new Set(allRecords.map((r: { created_at: string }) => new Date(r.created_at).toDateString())).size
           : 0,
         currentStreak: streak,
         thisMonthDays: uniqueDays.size,
