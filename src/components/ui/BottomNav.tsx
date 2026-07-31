@@ -7,17 +7,20 @@
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
-import { LayoutDashboard, ScanFace, Clock, UserCircle } from 'lucide-react';
-
-const tabs = [
-  { href: '/dashboard', icon: LayoutDashboard, label: 'Home' },
-  { href: '/check-in', icon: ScanFace, label: 'Check In' },
-  { href: '/history', icon: Clock, label: 'History' },
-  { href: '/profile', icon: UserCircle, label: 'Profile' },
-];
+import { LayoutDashboard, ScanFace, Clock, UserCircle, Shield } from 'lucide-react';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 export default function BottomNav() {
   const pathname = usePathname();
+  const user = useAuthStore((s) => s.user);
+
+  const tabs = [
+    { href: '/dashboard', icon: LayoutDashboard, label: 'Home' },
+    { href: '/check-in', icon: ScanFace, label: 'Check In' },
+    { href: '/history', icon: Clock, label: 'History' },
+    ...(user?.role === 'admin' ? [{ href: '/admin', icon: Shield, label: 'Admin' }] : []),
+    { href: '/profile', icon: UserCircle, label: 'Profile' },
+  ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 glass safe-area-bottom">

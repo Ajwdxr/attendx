@@ -22,6 +22,7 @@ import {
   Zap,
   LogIn,
   LogOut,
+  Shield,
 } from 'lucide-react';
 import { getGreeting, formatTime, formatRelativeTime, getInitials } from '@/lib/utils';
 
@@ -87,6 +88,26 @@ export default function DashboardPage() {
           )}
         </div>
       </Card>
+
+      {/* Admin Panel Quick Access */}
+      {user.role === 'admin' && (
+        <Card
+          hoverable
+          onClick={() => router.push('/admin')}
+          className="border-ios-orange/30 bg-ios-orange/5 animate-fade-in-up"
+        >
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-[10px] bg-ios-orange/10 flex items-center justify-center shrink-0">
+              <Shield className="w-5 h-5 text-ios-orange" />
+            </div>
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-ios-orange">Admin Dashboard</p>
+              <p className="text-xs text-muted">You are logged in as Admin. Click here to manage attendance & locations.</p>
+            </div>
+            <ChevronRight className="w-4 h-4 text-ios-orange" />
+          </div>
+        </Card>
+      )}
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 gap-3">
