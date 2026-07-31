@@ -13,10 +13,10 @@
   --color-ios-orange: #ff9500;
   --color-ios-gray: #8e8e93;
   --color-ios-gray-2: #aeaeb2;
-  --color-ios-gray-3: #c7c7cc;
-  --color-ios-gray-4: #d1d1d6;
-  --color-ios-gray-5: #e5e5ea;
-  --color-ios-gray-6: #f2f2f7;
+  --color-ios-gray-3: var(--ios-gray-3);
+  --color-ios-gray-4: var(--ios-gray-4);
+  --color-ios-gray-5: var(--ios-gray-5);
+  --color-ios-gray-6: var(--ios-gray-6);
   --color-card: var(--card-bg);
   --color-card-hover: var(--card-hover-bg);
   --color-border: var(--border-color);
@@ -37,6 +37,10 @@
   --border-color: #e5e5ea;
   --muted-text: #8e8e93;
   --input-background: #e5e5ea;
+  --ios-gray-3: #c7c7cc;
+  --ios-gray-4: #d1d1d6;
+  --ios-gray-5: #e5e5ea;
+  --ios-gray-6: #f2f2f7;
   --glass-bg: rgba(255, 255, 255, 0.72);
   --glass-border: rgba(255, 255, 255, 0.3);
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
@@ -54,6 +58,10 @@
     --border-color: #38383a;
     --muted-text: #98989d;
     --input-background: #2c2c2e;
+    --ios-gray-3: #48484a;
+    --ios-gray-4: #3a3a3c;
+    --ios-gray-5: #2c2c2e;
+    --ios-gray-6: #1c1c1e;
     --glass-bg: rgba(28, 28, 30, 0.72);
     --glass-border: rgba(255, 255, 255, 0.1);
     --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
