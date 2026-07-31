@@ -72,7 +72,7 @@ export default function FaceScanner({ onScanComplete, storedDescriptor, mode = '
   return (
     <div className="space-y-4">
       {/* Camera viewport */}
-      <div className="relative aspect-[3/4] max-h-[400px] bg-black rounded-[var(--radius-ios-md)] overflow-hidden">
+      <div className="relative w-full aspect-[3/4] max-h-[400px] mx-auto bg-black rounded-[var(--radius-ios-md)] overflow-hidden">
         {isActive ? (
           <>
             <video
