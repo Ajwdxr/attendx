@@ -15,6 +15,7 @@ interface CameraState {
 
 export function useCamera() {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const streamRef = useRef<MediaStream | null>(null);
   const [state, setState] = useState<CameraState>({
     stream: null,
     isActive: false,
@@ -25,8 +26,8 @@ export function useCamera() {
   const startCamera = useCallback(async (facingMode: 'user' | 'environment' = 'user') => {
     try {
       // Stop any existing stream
-      if (state.stream) {
-        state.stream.getTracks().forEach((track) => track.stop());
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
       }
 
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -38,9 +39,13 @@ export function useCamera() {
         audio: false,
       });
 
+      streamRef.current = stream;
+
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
-        await videoRef.current.play();
+        await videoRef.current.play().catch((err) => {
+          console.warn('[useCamera] Play interrupted during start:', err);
+        });
       }
 
       setState({
@@ -63,11 +68,12 @@ export function useCamera() {
         isActive: false,
       }));
     }
-  }, [state.stream]);
+  }, []);
 
   const stopCamera = useCallback(() => {
-    if (state.stream) {
-      state.stream.getTracks().forEach((track) => track.stop());
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
     }
     if (videoRef.current) {
       videoRef.current.srcObject = null;
@@ -77,7 +83,7 @@ export function useCamera() {
       stream: null,
       isActive: false,
     }));
-  }, [state.stream]);
+  }, []);
 
   const switchCamera = useCallback(() => {
     const newMode = state.facingMode === 'user' ? 'environment' : 'user';
@@ -97,14 +103,23 @@ export function useCamera() {
     return canvas;
   }, []);
 
+  // Sync stream to video element when it becomes available in the DOM
+  useEffect(() => {
+    if (state.stream && videoRef.current) {
+      videoRef.current.srcObject = state.stream;
+      videoRef.current.play().catch((err) => {
+        console.warn('[useCamera] Play interrupted during stream sync:', err);
+      });
+    }
+  }, [state.stream, state.isActive]);
+
   // Cleanup on unmount
   useEffect(() => {
     return () => {
-      if (state.stream) {
-        state.stream.getTracks().forEach((track) => track.stop());
+      if (streamRef.current) {
+        streamRef.current.getTracks().forEach((track) => track.stop());
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
